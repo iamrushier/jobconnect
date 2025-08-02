@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: jobconnect-backend
+  datasource:
+    url: jdbc:mysql://localhost:3306/jobconnect?useSSL=false&serverTimezone=UTC
+    username: root
+    password: student
+  jpa:
+    hibernate:
+      ddl-auto:update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+server:
+  port: 8080
