@@ -1,5 +1,6 @@
 package io.github.iamrushier.jobconnect_backend.service.impl;
 
+import io.github.iamrushier.jobconnect_backend.dto.common.PagedResponse;
 import io.github.iamrushier.jobconnect_backend.dto.job.JobRequest;
 import io.github.iamrushier.jobconnect_backend.dto.job.JobResponse;
 import io.github.iamrushier.jobconnect_backend.exception.ResourceNotFoundException;
@@ -9,8 +10,12 @@ import io.github.iamrushier.jobconnect_backend.model.User;
 import io.github.iamrushier.jobconnect_backend.repository.JobRepository;
 import io.github.iamrushier.jobconnect_backend.repository.UserRepository;
 import io.github.iamrushier.jobconnect_backend.service.JobService;
+import io.github.iamrushier.jobconnect_backend.util.SearchSpecification;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +28,26 @@ public class JobServiceImpl implements JobService {
     private final JobRepository jobRepository;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final SearchSpecification searchSpecification;
+
+    @Override
+    public PagedResponse<JobResponse> searchJobs(String keyword, String location, Pageable pageable) {
+        Specification<Job> spec = searchSpecification.findByCriteria(keyword, location);
+        Page<Job> jobsPage = jobRepository.findAll(spec, pageable);
+
+        List<JobResponse> jobResponses = jobsPage.getContent().stream()
+                .map(job -> modelMapper.map(job, JobResponse.class))
+                .collect(Collectors.toList());
+
+        return new PagedResponse<>(
+                jobResponses,
+                jobsPage.getNumber(),
+                jobsPage.getSize(),
+                jobsPage.getTotalElements(),
+                jobsPage.getTotalPages(),
+                jobsPage.isLast()
+        );
+    }
 
     @Override
     public JobResponse createJob(JobRequest jobRequest, String username) {
