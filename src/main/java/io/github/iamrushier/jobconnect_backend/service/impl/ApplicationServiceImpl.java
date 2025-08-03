@@ -11,6 +11,8 @@ import io.github.iamrushier.jobconnect_backend.repository.JobRepository;
 import io.github.iamrushier.jobconnect_backend.repository.ResumeRepository;
 import io.github.iamrushier.jobconnect_backend.repository.UserRepository;
 import io.github.iamrushier.jobconnect_backend.service.ApplicationService;
+import io.github.iamrushier.jobconnect_backend.service.EmailService;
+import io.github.iamrushier.jobconnect_backend.util.EmailTemplateUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final JobRepository jobRepository;
     private final ResumeRepository resumeRepository;
     private final ModelMapper modelMapper;
+    private final EmailService emailService;
 
     @Override
     public ApplicationResponse applyForJob(ApplicationRequest applicationRequest, String username) {
@@ -50,6 +53,8 @@ public class ApplicationServiceImpl implements ApplicationService {
         application.setStatus(ApplicationStatus.PENDING);
 
         Application savedApplication = applicationRepository.save(application);
+
+        emailService.sendEmail(user.getEmail(), "Job Application Received", EmailTemplateUtil.buildJobApplicationEmail(user, job));
 
         return modelMapper.map(savedApplication, ApplicationResponse.class);
     }
