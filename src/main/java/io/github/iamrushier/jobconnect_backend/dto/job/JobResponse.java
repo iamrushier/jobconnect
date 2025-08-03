@@ -1,5 +1,6 @@
 package io.github.iamrushier.jobconnect_backend.dto.job;
 
+import io.github.iamrushier.jobconnect_backend.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,5 +23,5 @@ public class JobResponse {
     private BigDecimal maxSalary;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private String employerName;
+    private Long employerId;
 }
