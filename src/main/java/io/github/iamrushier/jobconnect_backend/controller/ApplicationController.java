@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,20 +20,20 @@ public class ApplicationController {
     private final ApplicationService applicationService;
 
     @PostMapping
-    @PreAuthorize("hasRole('JOB_SEEKER')")
-    public ResponseEntity<ApplicationResponse> applyForJob(@RequestBody ApplicationRequest applicationRequest, @AuthenticationPrincipal String username) {
-        return ResponseEntity.ok(applicationService.applyForJob(applicationRequest, username));
+    @PreAuthorize("hasAuthority('JOB_SEEKER')")     //    @PreAuthorize("hasRole('JOB_SEEKER')")
+    public ResponseEntity<ApplicationResponse> applyForJob(@RequestBody ApplicationRequest applicationRequest, @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(applicationService.applyForJob(applicationRequest, userDetails.getUsername()));
     }
 
     @GetMapping("/my-applications")
-    @PreAuthorize("hasRole('JOB_SEEKER')")
-    public ResponseEntity<List<ApplicationResponse>> getMyApplications(@AuthenticationPrincipal String username) {
-        return ResponseEntity.ok(applicationService.getMyApplications(username));
+    @PreAuthorize("hasAuthority('JOB_SEEKER')")     //    @PreAuthorize("hasRole('JOB_SEEKER')")
+    public ResponseEntity<List<ApplicationResponse>> getMyApplications(@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(applicationService.getMyApplications(userDetails.getUsername()));
     }
 
     @GetMapping("/job/{jobId}")
-    @PreAuthorize("hasRole('EMPLOYER')")
-    public ResponseEntity<List<ApplicationResponse>> getApplicationsForJob(@PathVariable Long jobId, @AuthenticationPrincipal String username) {
-        return ResponseEntity.ok(applicationService.getApplicationsForJob(jobId, username));
+    @PreAuthorize("hasAuthority('EMPLOYER')")     //    @PreAuthorize("hasRole('EMPLOYER')")
+    public ResponseEntity<List<ApplicationResponse>> getApplicationsForJob(@PathVariable Long jobId, @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(applicationService.getApplicationsForJob(jobId, userDetails.getUsername()));
     }
 }

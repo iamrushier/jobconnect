@@ -54,8 +54,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         Application savedApplication = applicationRepository.save(application);
 
-        emailService.sendEmail(user.getEmail(), "Job Application Received", EmailTemplateUtil.buildJobApplicationEmail(user, job));
-
+//        emailService.sendEmail(user.getEmail(), "Job Application Received", EmailTemplateUtil.buildJobApplicationEmail(user, job));
+        System.out.println("Mail sent: Job Application Received");
         return modelMapper.map(savedApplication, ApplicationResponse.class);
     }
 

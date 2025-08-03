@@ -63,13 +63,12 @@ public class ResumeServiceImpl implements ResumeService {
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            Resume resume = new Resume();
+            Resume resume = resumeRepository.findByUserId(user.getId()).orElse(new Resume());
             resume.setUser(user);
             resume.setFilename(fileName);
             resume.setOriginalFilename(originalFilename);
             resume.setContentType(file.getContentType());
             resume.setSize(file.getSize());
-
             return resumeRepository.save(resume);
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + originalFilename + ". Please try again!", ex);

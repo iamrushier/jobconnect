@@ -15,7 +15,8 @@ public class ApplicationResponse {
     private Long jobId;
     private String jobTitle;
     private Long userId;
-    private String username;
     private ApplicationStatus status;
-    private LocalDateTime appliedAt;
+    private LocalDateTime createdAt;
+//    private String username;
+//    private LocalDateTime appliedAt;
 }

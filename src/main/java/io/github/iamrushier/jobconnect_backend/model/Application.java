@@ -8,7 +8,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "applications")
+@Table(name = "applications",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"job_id", "user_id"})
+)
 public class Application extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -23,7 +25,8 @@ public class Application extends BaseEntity {
     @Column(name = "status", nullable = false)
     private ApplicationStatus status;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    //    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "resume_id", referencedColumnName = "id")
     private Resume resume;
 }
