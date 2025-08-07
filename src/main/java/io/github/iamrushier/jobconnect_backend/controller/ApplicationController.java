@@ -3,6 +3,7 @@ package io.github.iamrushier.jobconnect_backend.controller;
 import io.github.iamrushier.jobconnect_backend.dto.application.ApplicationRequest;
 import io.github.iamrushier.jobconnect_backend.dto.application.ApplicationResponse;
 import io.github.iamrushier.jobconnect_backend.service.ApplicationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/applications")
 @RequiredArgsConstructor
+@Tag(name="Job Application APIs")
 public class ApplicationController {
 
     private final ApplicationService applicationService;

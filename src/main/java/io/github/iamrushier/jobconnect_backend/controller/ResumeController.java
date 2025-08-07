@@ -2,6 +2,7 @@ package io.github.iamrushier.jobconnect_backend.controller;
 
 import io.github.iamrushier.jobconnect_backend.model.Resume;
 import io.github.iamrushier.jobconnect_backend.service.ResumeService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
@@ -20,6 +21,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/v1/resumes")
 @RequiredArgsConstructor
+@Tag(name="Resume APIs", description = "Resume document related actions")
 public class ResumeController {
 
     private final ResumeService resumeService;

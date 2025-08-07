@@ -3,6 +3,7 @@ package io.github.iamrushier.jobconnect_backend.controller;
 import io.github.iamrushier.jobconnect_backend.dto.common.PagedResponse;
 import io.github.iamrushier.jobconnect_backend.dto.job.JobResponse;
 import io.github.iamrushier.jobconnect_backend.service.JobService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/jobs/search")
 @RequiredArgsConstructor
+@Tag(name="Job search APIs")
 public class JobSearchController {
 
     private final JobService jobService;

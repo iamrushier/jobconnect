@@ -3,6 +3,7 @@ package io.github.iamrushier.jobconnect_backend.controller;
 import io.github.iamrushier.jobconnect_backend.dto.job.JobResponse;
 import io.github.iamrushier.jobconnect_backend.dto.user.UserResponse;
 import io.github.iamrushier.jobconnect_backend.service.AdminService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api/v1/admin")
 @RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ADMIN')")
+@Tag(name="Admin APIs")
 public class AdminController {
 
     private final AdminService adminService;
