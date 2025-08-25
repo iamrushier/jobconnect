@@ -3,6 +3,9 @@ export const API = {
     LOGIN: "/api/v1/auth/login",
     REGISTER: "/api/v1/auth/register",
   },
+  USER: {
+    ME: "/api/v1/user/me",
+  },
   //   JOBS: {
   //     BASE: "/api/v1/jobs",
   //     SEARCH: "/api/v1/jobs/search",

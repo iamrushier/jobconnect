@@ -17,3 +17,11 @@ export interface AuthResponse {
   refreshToken?: string;
   role: Role;
 }
+
+export interface UserResponse {
+  id: number;
+  username: string;
+  email: string;
+  role: Role;
+  createdAt: string;
+}
