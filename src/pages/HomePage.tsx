@@ -1,3 +1,4 @@
+import LoadingSpinner from "../components/LoadingSpinner";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 
@@ -6,12 +7,13 @@ const HomePage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
-        </div>
-      </div>
+      // <div className="flex items-center justify-center min-h-[400px]">
+      //   <div className="text-center">
+      //     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+      //     <p className="mt-4 text-gray-600">Loading...</p>
+      //   </div>
+      // </div>
+      <LoadingSpinner />
     );
   }
 
@@ -121,13 +123,13 @@ const HomePage = () => {
       </div>
 
       {/* Recent Activity Section */}
-      <div className="bg-white rounded-lg shadow-md p-6">
+      {/* <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
         <div className="text-center py-8 text-gray-500">
           <p>No recent activity to show.</p>
           <p className="text-sm mt-2">Start by exploring the platform!</p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

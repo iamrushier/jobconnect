@@ -52,3 +52,15 @@ export const fetchCurrentUser = async () => {
     throw error;
   }
 };
+
+export const updateUserName = async (
+  username: string
+): Promise<UserResponse> => {
+  try {
+    const response = await httpClient.put<UserResponse>(API.USER.ME, username);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating user name:", error);
+    throw error;
+  }
+};

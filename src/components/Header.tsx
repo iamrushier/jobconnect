@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import { removeItem } from "../../utils/storage-helpers";
+import { useAuth } from "../context/AuthContext";
+import { removeItem } from "../utils/storage-helpers";
 
 const Header = () => {
   const { user, setUser, loading } = useAuth();

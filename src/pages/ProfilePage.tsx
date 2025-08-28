@@ -1,8 +1,23 @@
 import React from "react";
 import { useAuth } from "../context/AuthContext";
+import { updateUserName } from "../api/requests";
+import { useNavigate } from "react-router-dom";
+import { removeItem } from "../utils/storage-helpers";
 
 const ProfilePage: React.FC = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, setUser } = useAuth();
+  const [editMode, setEditMode] = React.useState(false);
+  const [newUsername, setNewUsername] = React.useState(user!.username);
+  const navigate = useNavigate();
+
+  const handleEditUsername = async (newUsername: string) => {
+    const updatedUser = await updateUserName(newUsername);
+    setUser(updatedUser);
+    window.alert("Username updated successfully. You will be logged out.");
+    setUser(null);
+    removeItem("token");
+    navigate("/login");
+  };
 
   if (loading) {
     return (
@@ -60,9 +75,18 @@ const ProfilePage: React.FC = () => {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Username
               </label>
-              <div className="p-3 bg-gray-50 border rounded-md">
-                <p className="text-gray-900">{user.username}</p>
-              </div>
+              {editMode ? (
+                <input
+                  type="text"
+                  value={newUsername}
+                  onChange={(e) => setNewUsername(e.target.value)}
+                  className="border border-gray-300 p-2 rounded-md w-full"
+                />
+              ) : (
+                <div className="p-3 bg-gray-50 border rounded-md">
+                  <p className="text-gray-900">{user.username}</p>
+                </div>
+              )}
             </div>
 
             <div>
@@ -95,10 +119,18 @@ const ProfilePage: React.FC = () => {
             </div>
           </div>
 
-          {/* Edit Profile Button */}
+          {/* Edit Username Button */}
           <div className="mt-8 flex justify-end">
-            <button className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-              Edit Profile
+            <button
+              onClick={() => {
+                if (editMode) {
+                  handleEditUsername(newUsername);
+                }
+                setEditMode(!editMode);
+              }}
+              className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            >
+              {editMode ? "Save changes" : "Edit Username"}
             </button>
           </div>
         </div>

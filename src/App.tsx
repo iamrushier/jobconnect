@@ -4,10 +4,10 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
-import Header from "./components/common/Header";
+import Header from "./components/Header";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import NotFoundPage from "./components/NotFoundPage";
-import Footer from "./components/common/Footer";
+import Footer from "./components/Footer";
 
 function App() {
   return (
