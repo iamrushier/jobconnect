@@ -6,15 +6,7 @@ const HomePage = () => {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return (
-      // <div className="flex items-center justify-center min-h-[400px]">
-      //   <div className="text-center">
-      //     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-      //     <p className="mt-4 text-gray-600">Loading...</p>
-      //   </div>
-      // </div>
-      <LoadingSpinner />
-    );
+    return <LoadingSpinner />;
   }
 
   if (!user) {
@@ -83,18 +75,24 @@ const HomePage = () => {
                 <p className="text-sm text-gray-600 mb-3">
                   Discover new opportunities that match your skills
                 </p>
-                <button className="text-blue-600 hover:text-blue-800 font-medium">
+                <Link
+                  to="/jobs"
+                  className="text-blue-600 hover:text-blue-800 font-medium"
+                >
                   View Jobs →
-                </button>
+                </Link>
               </div>
               <div className="p-4 border rounded-lg hover:bg-gray-50 transition-colors">
                 <h3 className="font-semibold mb-2">My Applications</h3>
                 <p className="text-sm text-gray-600 mb-3">
                   Track your job application status
                 </p>
-                <button className="text-blue-600 hover:text-blue-800 font-medium">
+                <Link
+                  to="/applications"
+                  className="text-blue-600 hover:text-blue-800 font-medium"
+                >
                   View Applications →
-                </button>
+                </Link>
               </div>
             </>
           ) : (

@@ -6,6 +6,9 @@ export const API = {
   USER: {
     ME: "/api/v1/user/me",
   },
+  JOBS: {
+    SEARCH: "/api/v1/jobs/search",
+  },
   //   JOBS: {
   //     BASE: "/api/v1/jobs",
   //     SEARCH: "/api/v1/jobs/search",

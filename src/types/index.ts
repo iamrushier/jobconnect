@@ -25,3 +25,29 @@ export interface UserResponse {
   role: Role;
   createdAt: string;
 }
+// Jobs related
+export interface JobResponse {
+  id: number;
+  title: string;
+  description: string;
+  location: string;
+  minSalary: number;
+  maxSalary: number;
+  createdAt: string;
+  updatedAt: string;
+  employerId: number;
+}
+export interface PagedResponse<T> {
+  content: T[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+}
+export interface JobSearchParams {
+  keyword?: string;
+  location?: string;
+  page?: number;
+  size?: number;
+}

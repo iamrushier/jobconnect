@@ -3,7 +3,10 @@ import axios from "axios";
 import { getItem } from "../utils/storage-helpers";
 import type {
   AuthResponse,
+  JobResponse,
+  JobSearchParams,
   LoginRequest,
+  PagedResponse,
   RegisterRequest,
   UserResponse,
 } from "../types";
@@ -64,3 +67,22 @@ export const updateUserName = async (
     throw error;
   }
 };
+
+export const searchJobs = async (params: JobSearchParams) => {
+  try {
+    const queryParams = new URLSearchParams();
+    if (params.keyword) queryParams.append("keyword", params.keyword);
+    if (params.location) queryParams.append("location", params.location);
+    queryParams.append("page", (params.page || 0).toString());
+    queryParams.append("size", (params.size || 10).toString());
+
+    const response = await httpClient.get<PagedResponse<JobResponse>>(
+      `${API.JOBS.SEARCH}?${queryParams.toString()}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error searching jobs:", error);
+    throw error;
+  }
+};
+
