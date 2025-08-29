@@ -28,4 +28,12 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         return modelMapper.map(user, UserResponse.class);
     }
+
+    @Override
+    public void updateUsername(String oldUsername, String newUsername) {
+        User user = userRepository.findByUsername(oldUsername)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        user.setUsername(newUsername);
+        userRepository.save(user);
+    }
 }
