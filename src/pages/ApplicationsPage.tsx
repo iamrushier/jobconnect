@@ -1,5 +1,3 @@
-import React from "react";
-
 const ApplicationsPage = () => {
   return (
     <div className="text-center py-12">

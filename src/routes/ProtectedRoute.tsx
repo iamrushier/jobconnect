@@ -6,12 +6,14 @@ interface ProtectedRouteProps {
   children: React.ReactNode;
   requireAuth?: boolean;
   redirectTo?: string;
+  role?: string;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requireAuth = true,
   redirectTo = "/login",
+  role,
 }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
@@ -32,6 +34,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (requireAuth && !user) {
     // Save the attempted location for redirecting after login
     return <Navigate to={redirectTo} state={{ from: location }} replace />;
+  }
+
+  // If a specific role is required and the user does not have it
+  if (role && user?.role !== role) {
+    return <Navigate to="/" replace />;
   }
 
   // If user is logged in but trying to access login/register pages

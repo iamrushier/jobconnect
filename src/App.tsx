@@ -10,6 +10,9 @@ import NotFoundPage from "./components/NotFoundPage";
 import Footer from "./components/Footer";
 import JobsPage from "./pages/JobsPage";
 import ApplicationsPage from "./pages/ApplicationsPage";
+import EmployerJobsPage from "./pages/EmployerJobsPage";
+import CreateJobPage from "./pages/CreateJobPage";
+import EditJobPage from "./pages/EditJobPage";
 
 function App() {
   return (
@@ -66,6 +69,32 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <ApplicationsPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Employer routes */}
+              <Route
+                path="/employer/jobs"
+                element={
+                  <ProtectedRoute role="EMPLOYER">
+                    <EmployerJobsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/employer/jobs/create"
+                element={
+                  <ProtectedRoute role="EMPLOYER">
+                    <CreateJobPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/employer/jobs/edit/:id"
+                element={
+                  <ProtectedRoute role="EMPLOYER">
+                    <EditJobPage />
                   </ProtectedRoute>
                 }
               />

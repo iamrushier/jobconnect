@@ -25,6 +25,15 @@ export interface UserResponse {
   role: Role;
   createdAt: string;
 }
+
+export interface JobRequest {
+  title: string;
+  description: string;
+  location: string;
+  minSalary?: number;
+  maxSalary?: number;
+}
+
 // Jobs related
 export interface JobResponse {
   id: number;

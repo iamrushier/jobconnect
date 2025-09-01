@@ -3,6 +3,7 @@ import axios from "axios";
 import { getItem } from "../utils/storage-helpers";
 import type {
   AuthResponse,
+  JobRequest,
   JobResponse,
   JobSearchParams,
   LoginRequest,
@@ -86,3 +87,57 @@ export const searchJobs = async (params: JobSearchParams) => {
   }
 };
 
+export const createJob = async (jobRequest: JobRequest) => {
+  try {
+    const response = await httpClient.post<JobResponse>(
+      API.JOBS.BASE,
+      jobRequest
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error creating job:", error);
+    throw error;
+  }
+};
+
+export const getJobById = async (id: number) => {
+  try {
+    const response = await httpClient.get<JobResponse>(`${API.JOBS.BASE}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching job with id ${id}:`, error);
+    throw error;
+  }
+};
+
+export const getAllJobsByEmployer = async () => {
+  try {
+    const response = await httpClient.get<JobResponse[]>(API.JOBS.EMPLOYER);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching jobs by employer:", error);
+    throw error;
+  }
+};
+
+export const updateJob = async (id: number, jobRequest: JobRequest) => {
+  try {
+    const response = await httpClient.put<JobResponse>(
+      `${API.JOBS.BASE}/${id}`,
+      jobRequest
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error updating job with id ${id}:`, error);
+    throw error;
+  }
+};
+
+export const deleteJob = async (id: number) => {
+  try {
+    await httpClient.delete(`${API.JOBS.BASE}/${id}`);
+  } catch (error) {
+    console.error(`Error deleting job with id ${id}:`, error);
+    throw error;
+  }
+};

@@ -102,18 +102,24 @@ const HomePage = () => {
                 <p className="text-sm text-gray-600 mb-3">
                   Find the perfect candidate for your open position
                 </p>
-                <button className="text-blue-600 hover:text-blue-800 font-medium">
+                <Link
+                  to="/employer/jobs/create"
+                  className="text-blue-600 hover:text-blue-800 font-medium"
+                >
                   Create Job Post →
-                </button>
+                </Link>
               </div>
               <div className="p-4 border rounded-lg hover:bg-gray-50 transition-colors">
                 <h3 className="font-semibold mb-2">Manage Jobs</h3>
                 <p className="text-sm text-gray-600 mb-3">
                   View and manage your posted jobs
                 </p>
-                <button className="text-blue-600 hover:text-blue-800 font-medium">
+                <Link
+                  to="/employer/jobs"
+                  className="text-blue-600 hover:text-blue-800 font-medium"
+                >
                   View My Jobs →
-                </button>
+                </Link>
               </div>
             </>
           )}
