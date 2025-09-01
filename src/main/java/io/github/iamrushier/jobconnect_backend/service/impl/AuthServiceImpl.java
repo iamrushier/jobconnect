@@ -3,6 +3,7 @@ package io.github.iamrushier.jobconnect_backend.service.impl;
 import io.github.iamrushier.jobconnect_backend.dto.auth.AuthResponse;
 import io.github.iamrushier.jobconnect_backend.dto.auth.LoginRequest;
 import io.github.iamrushier.jobconnect_backend.dto.auth.RegisterRequest;
+import io.github.iamrushier.jobconnect_backend.exception.BadRequestException;
 import io.github.iamrushier.jobconnect_backend.model.User;
 import io.github.iamrushier.jobconnect_backend.repository.UserRepository;
 import io.github.iamrushier.jobconnect_backend.security.CustomUserDetails;
@@ -25,6 +26,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse register(RegisterRequest request) {
+        User existingUser = userRepository.findByUsername(request.getUsername())
+                .orElse(null);
+        if (existingUser != null) {
+            throw new BadRequestException("User already exists");
+        }
         var user = new User();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
