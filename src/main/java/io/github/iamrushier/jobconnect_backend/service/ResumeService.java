@@ -7,4 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ResumeService {
     Resume storeFile(MultipartFile file, String username);
     Resource loadFileAsResource(String filename);
+    Resume getResumeByUsername(String username);
+    void deleteResumeByUsername(String username);
 }

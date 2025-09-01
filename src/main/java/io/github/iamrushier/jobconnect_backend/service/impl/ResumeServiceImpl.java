@@ -89,4 +89,28 @@ public class ResumeServiceImpl implements ResumeService {
             throw new ResourceNotFoundException("File not found " + filename+" : "+ex);
         }
     }
+
+    @Override
+    public Resume getResumeByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
+        return resumeRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Resume not found for user: " + username));
+    }
+
+    @Override
+    public void deleteResumeByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
+        Resume resume = resumeRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Resume not found for user: " + username));
+
+        try {
+            Path filePath = this.fileStorageLocation.resolve(resume.getFilename()).normalize();
+            Files.deleteIfExists(filePath);
+            resumeRepository.delete(resume);
+        } catch (IOException ex) {
+            throw new FileStorageException("Could not delete file " + resume.getFilename() + ". Please try again!", ex);
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package io.github.iamrushier.jobconnect_backend.controller;
 
+import io.github.iamrushier.jobconnect_backend.dto.resume.ResumeResponse;
 import io.github.iamrushier.jobconnect_backend.model.Resume;
 import io.github.iamrushier.jobconnect_backend.service.ResumeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,7 +22,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/v1/resumes")
 @RequiredArgsConstructor
-@Tag(name="Resume APIs", description = "Resume document related actions")
+@Tag(name = "Resume APIs", description = "Resume document related actions")
 public class ResumeController {
 
     private final ResumeService resumeService;
@@ -58,5 +59,25 @@ public class ResumeController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+
+    @GetMapping("/mine")
+    @PreAuthorize("hasAuthority('JOB_SEEKER')")
+    public ResponseEntity<ResumeResponse> getMyResume(@AuthenticationPrincipal UserDetails userDetails) {
+        Resume resume = resumeService.getResumeByUsername(userDetails.getUsername());
+        ResumeResponse resumeResponse = new ResumeResponse(
+                resume.getFilename(),
+                resume.getOriginalFilename(),
+                resume.getContentType(),
+                resume.getSize()
+        );
+        return ResponseEntity.ok(resumeResponse);
+    }
+
+    @DeleteMapping("/mine")
+    @PreAuthorize("hasAuthority('JOB_SEEKER')")
+    public ResponseEntity<Void> deleteMyResume(@AuthenticationPrincipal UserDetails userDetails) {
+        resumeService.deleteResumeByUsername(userDetails.getUsername());
+        return ResponseEntity.noContent().build();
     }
 }
