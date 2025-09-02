@@ -13,4 +13,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
     List<Application> findByUser(User user);
 
     List<Application> findByJob(Job job);
+
+    boolean existsByUser(User user);
 }

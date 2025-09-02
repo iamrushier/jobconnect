@@ -2,6 +2,7 @@ package io.github.iamrushier.jobconnect_backend.controller;
 
 import io.github.iamrushier.jobconnect_backend.dto.resume.ResumeResponse;
 import io.github.iamrushier.jobconnect_backend.model.Resume;
+import io.github.iamrushier.jobconnect_backend.service.ApplicationService;
 import io.github.iamrushier.jobconnect_backend.service.ResumeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;

@@ -85,4 +85,9 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .map(application -> modelMapper.map(application, ApplicationResponse.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public boolean existsByUser(User user) {
+        return applicationRepository.existsByUser(user);
+    }
 }

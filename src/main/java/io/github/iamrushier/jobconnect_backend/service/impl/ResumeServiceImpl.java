@@ -1,12 +1,15 @@
 package io.github.iamrushier.jobconnect_backend.service.impl;
 
 import io.github.iamrushier.jobconnect_backend.config.FileStorageProperties;
+import io.github.iamrushier.jobconnect_backend.exception.BadRequestException;
 import io.github.iamrushier.jobconnect_backend.exception.FileStorageException;
 import io.github.iamrushier.jobconnect_backend.exception.ResourceNotFoundException;
 import io.github.iamrushier.jobconnect_backend.model.Resume;
 import io.github.iamrushier.jobconnect_backend.model.User;
+import io.github.iamrushier.jobconnect_backend.repository.ApplicationRepository;
 import io.github.iamrushier.jobconnect_backend.repository.ResumeRepository;
 import io.github.iamrushier.jobconnect_backend.repository.UserRepository;
+import io.github.iamrushier.jobconnect_backend.service.ApplicationService;
 import io.github.iamrushier.jobconnect_backend.service.ResumeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -28,13 +31,15 @@ public class ResumeServiceImpl implements ResumeService {
     private final Path fileStorageLocation;
     private final ResumeRepository resumeRepository;
     private final UserRepository userRepository;
+    private final ApplicationRepository applicationRepository;
 
     @Autowired
-    public ResumeServiceImpl(FileStorageProperties fileStorageProperties, ResumeRepository resumeRepository, UserRepository userRepository) {
+    public ResumeServiceImpl(FileStorageProperties fileStorageProperties, ResumeRepository resumeRepository, UserRepository userRepository, ApplicationService applicationService, ApplicationRepository applicationRepository) {
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
         this.resumeRepository = resumeRepository;
         this.userRepository = userRepository;
+        this.applicationRepository = applicationRepository;
 
         try {
             Files.createDirectories(this.fileStorageLocation);
@@ -102,6 +107,9 @@ public class ResumeServiceImpl implements ResumeService {
     public void deleteResumeByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
+        if(applicationRepository.existsByUser(user)){
+            throw new BadRequestException("Cannot delete resume for user with applications");
+        }
         Resume resume = resumeRepository.findByUserId(user.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Resume not found for user: " + username));
 
