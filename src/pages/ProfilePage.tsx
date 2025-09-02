@@ -8,7 +8,7 @@ import {
   deleteMyResume,
   downloadResume,
 } from "../api/requests";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { removeItem } from "../utils/storage-helpers";
 import type { ResumeResponse } from "../types";
 
@@ -208,7 +208,9 @@ const ProfilePage: React.FC = () => {
           <h2 className="text-xl font-semibold text-gray-900 mb-6">
             {user.role === "JOB_SEEKER"
               ? "Job Seeker Dashboard"
-              : "Employer Dashboard"}
+              : user.role === "EMPLOYER"
+              ? "Employer Dashboard"
+              : "Admin Dashboard"}
           </h2>
 
           <div className="grid md:grid-cols-3 gap-4">
@@ -230,7 +232,7 @@ const ProfilePage: React.FC = () => {
                   <p className="text-sm text-purple-700">Jobs saved</p>
                 </div>
               </>
-            ) : (
+            ) : user.role === "EMPLOYER" ? (
               <>
                 <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                   <h3 className="font-medium text-blue-900">Job Posts</h3>
@@ -252,65 +254,83 @@ const ProfilePage: React.FC = () => {
                   </p>
                 </div>
               </>
+            ) : user.role === "ADMIN" ? (
+              <div className="p-4 bg-gray-100 border border-gray-200 rounded-lg col-span-3 text-center">
+                <h3 className="font-medium text-gray-900 mb-2">
+                  You are logged in as an Administrator.
+                </h3>
+                <p className="text-sm text-gray-700 mb-4">
+                  Access the admin dashboard for full control over users and
+                  jobs.
+                </p>
+                <Link
+                  to="/admin/dashboard"
+                  className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+                >
+                  Go to Admin Dashboard
+                </Link>
+              </div>
+            ) : (
+              <></>
             )}
           </div>
-        </div>
 
-        {user.role === "JOB_SEEKER" && (
-          <div className="px-6 py-6 border-t border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6">
-              My Resume
-            </h2>
-            <div className="p-4 bg-gray-50 border rounded-md">
-              {resume ? (
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-semibold">{resume.originalFilename}</p>
-                    <p className="text-sm text-gray-500">
-                      {(resume.size / 1024).toFixed(2)} KB
-                    </p>
+          {user.role === "JOB_SEEKER" && (
+            <div className="px-6 py-6 border-t border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900 mb-6">
+                My Resume
+              </h2>
+              <div className="p-4 bg-gray-50 border rounded-md">
+                {resume ? (
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-semibold">{resume.originalFilename}</p>
+                      <p className="text-sm text-gray-500">
+                        {(resume.size / 1024).toFixed(2)} KB
+                      </p>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={handleDownloadResume}
+                        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                      >
+                        Download
+                      </button>
+                      <label className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors cursor-pointer">
+                        Replace
+                        <input
+                          type="file"
+                          className="hidden"
+                          onChange={handleFileChange}
+                        />
+                      </label>
+                      <button
+                        onClick={handleRemoveResume}
+                        className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <button
-                      onClick={handleDownloadResume}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                    >
-                      Download
-                    </button>
-                    <label className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors cursor-pointer">
-                      Replace
+                ) : (
+                  <div>
+                    <p className="text-gray-900 mb-4">
+                      Upload your resume to easily apply for jobs.
+                    </p>
+                    <label className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors cursor-pointer">
+                      Upload Resume
                       <input
                         type="file"
                         className="hidden"
                         onChange={handleFileChange}
                       />
                     </label>
-                    <button
-                      onClick={handleRemoveResume}
-                      className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
-                    >
-                      Remove
-                    </button>
                   </div>
-                </div>
-              ) : (
-                <div>
-                  <p className="text-gray-900 mb-4">
-                    Upload your resume to easily apply for jobs.
-                  </p>
-                  <label className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors cursor-pointer">
-                    Upload Resume
-                    <input
-                      type="file"
-                      className="hidden"
-                      onChange={handleFileChange}
-                    />
-                  </label>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

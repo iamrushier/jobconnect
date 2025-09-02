@@ -95,7 +95,7 @@ const HomePage = () => {
                 </Link>
               </div>
             </>
-          ) : (
+          ) : user.role === "EMPLOYER" ? (
             <>
               <div className="p-4 border rounded-lg hover:bg-gray-50 transition-colors">
                 <h3 className="font-semibold mb-2">Post a Job</h3>
@@ -122,7 +122,20 @@ const HomePage = () => {
                 </Link>
               </div>
             </>
-          )}
+          ) : user.role === "ADMIN" ? (
+            <div className="p-4 border rounded-lg hover:bg-gray-50 transition-colors col-span-2">
+              <h3 className="font-semibold mb-2">Admin Dashboard</h3>
+              <p className="text-sm text-gray-600 mb-3">
+                Access the administrative panel to manage users and jobs.
+              </p>
+              <Link
+                to="/admin/dashboard"
+                className="text-blue-600 hover:text-blue-800 font-medium"
+              >
+                Go to Dashboard →
+              </Link>
+            </div>
+          ) : null}
         </div>
       </div>
 
