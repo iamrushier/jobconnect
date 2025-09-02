@@ -13,6 +13,7 @@ import ApplicationsPage from "./pages/ApplicationsPage";
 import EmployerJobsPage from "./pages/EmployerJobsPage";
 import CreateJobPage from "./pages/CreateJobPage";
 import EditJobPage from "./pages/EditJobPage";
+import JobApplicationsPage from "./pages/JobApplicationsPage";
 
 function App() {
   return (
@@ -95,6 +96,14 @@ function App() {
                 element={
                   <ProtectedRoute role="EMPLOYER">
                     <EditJobPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/employer/jobs/:jobId/applications"
+                element={
+                  <ProtectedRoute role="EMPLOYER">
+                    <JobApplicationsPage />
                   </ProtectedRoute>
                 }
               />

@@ -15,6 +15,7 @@ export const API = {
     BASE: "/api/v1/applications",
     MINE: "/api/v1/applications/my-applications",
     JOB: (jobId: number) => `/api/v1/applications/job/${jobId}`,
+    UPDATE_STATUS: (applicationId: number) => `/api/v1/applications/${applicationId}/status`,
   },
   RESUMES: {
     UPLOAD: "/api/v1/resumes/upload",

@@ -69,7 +69,16 @@ export interface ResumeResponse {
   size: number;
 }
 
-export type ApplicationStatus = "Pending" | "Approved" | "Rejected";
+export const ApplicationStatus = {
+  Pending: "PENDING",
+  Viewed: "VIEWED",
+  Assessing: "ASSESSING",
+  Selected: "SELECTED",
+  Rejected: "REJECTED",
+} as const;
+
+export type ApplicationStatus =
+  (typeof ApplicationStatus)[keyof typeof ApplicationStatus];
 
 export interface ApplicationRequest {
   jobId: number;
@@ -81,6 +90,12 @@ export interface ApplicationResponse {
   jobId: number;
   jobTitle: string;
   userId: number;
+  username: string;
+  resumeFilename: string;
   status: ApplicationStatus;
   createdAt: string;
+}
+
+export interface UpdateApplicationStatusRequest {
+  status: ApplicationStatus;
 }

@@ -12,6 +12,7 @@ import type {
   PagedResponse,
   RegisterRequest,
   ResumeResponse,
+  UpdateApplicationStatusRequest,
   UserResponse,
 } from "../types";
 import { API } from "./endpoints";
@@ -221,6 +222,34 @@ export const getMyApplications = async () => {
     return response.data;
   } catch (error) {
     console.error("Error fetching applications:", error);
+    throw error;
+  }
+};
+
+export const getApplicationsForJob = async (jobId: number) => {
+  try {
+    const response = await httpClient.get<ApplicationResponse[]>(
+      API.APPLICATIONS.JOB(jobId)
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching applications for job:", error);
+    throw error;
+  }
+};
+
+export const updateApplicationStatus = async (
+  applicationId: number,
+  status: UpdateApplicationStatusRequest
+) => {
+  try {
+    const response = await httpClient.put<ApplicationResponse>(
+      API.APPLICATIONS.UPDATE_STATUS(applicationId),
+      status
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error updating application status:", error);
     throw error;
   }
 };

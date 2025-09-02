@@ -58,6 +58,9 @@ const EmployerJobsPage = () => {
               <h2 className="text-xl font-semibold">{job.title}</h2>
               <p className="text-gray-600">{job.location}</p>
               <div className="mt-4 space-x-2">
+                <Link to={`/employer/jobs/${job.id}/applications`} className="bg-green-500 text-white px-4 py-2 rounded">
+                  View Applications
+                </Link>
                 <Link to={`/employer/jobs/edit/${job.id}`} className="bg-yellow-500 text-white px-4 py-2 rounded">
                   Edit
                 </Link>
