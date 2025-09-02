@@ -15,6 +15,8 @@ public class ApplicationResponse {
     private Long jobId;
     private String jobTitle;
     private Long userId;
+    private String username;
+    private String resumeFilename;
     private ApplicationStatus status;
     private LocalDateTime createdAt;
 //    private String username;

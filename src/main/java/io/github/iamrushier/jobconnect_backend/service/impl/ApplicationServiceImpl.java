@@ -54,7 +54,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         Application savedApplication = applicationRepository.save(application);
 
-//        emailService.sendEmail(user.getEmail(), "Job Application Received", EmailTemplateUtil.buildJobApplicationEmail(user, job));
+// emailService.sendEmail(user.getEmail(), "Job Application Received", EmailTemplateUtil.buildJobApplicationEmail(user, job));
         System.out.println("Mail sent: Job Application Received");
         return modelMapper.map(savedApplication, ApplicationResponse.class);
     }
@@ -90,4 +90,26 @@ public class ApplicationServiceImpl implements ApplicationService {
     public boolean existsByUser(User user) {
         return applicationRepository.existsByUser(user);
     }
+
+    @Override
+    public ApplicationResponse updateApplicationStatus(Long applicationId, ApplicationStatus status, String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Application application = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new ResourceNotFoundException("Application not found"));
+
+        if (!application.getJob().getEmployer().getId().equals(user.getId())) {
+            throw new UnauthorizedException("You are not authorized to update this application");
+        }
+
+//        Resume resume = resumeRepository.findById(application.getResume().getId())
+//                .orElseThrow(() -> new ResourceNotFoundException("Resume not found"));
+        application.setStatus(status);
+        Application updatedApplication = applicationRepository.save(application);
+//        updatedApplication.setUser(user);
+//        updatedApplication.setResume(resume);
+        return modelMapper.map(updatedApplication, ApplicationResponse.class);
+    }
+
 }

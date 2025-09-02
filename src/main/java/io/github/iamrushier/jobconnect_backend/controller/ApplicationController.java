@@ -2,6 +2,7 @@ package io.github.iamrushier.jobconnect_backend.controller;
 
 import io.github.iamrushier.jobconnect_backend.dto.application.ApplicationRequest;
 import io.github.iamrushier.jobconnect_backend.dto.application.ApplicationResponse;
+import io.github.iamrushier.jobconnect_backend.dto.application.UpdateApplicationStatusRequest;
 import io.github.iamrushier.jobconnect_backend.service.ApplicationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,20 +23,29 @@ public class ApplicationController {
     private final ApplicationService applicationService;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('JOB_SEEKER')")     //    @PreAuthorize("hasRole('JOB_SEEKER')")
+    @PreAuthorize("hasAuthority('JOB_SEEKER')")
     public ResponseEntity<ApplicationResponse> applyForJob(@RequestBody ApplicationRequest applicationRequest, @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(applicationService.applyForJob(applicationRequest, userDetails.getUsername()));
     }
 
     @GetMapping("/my-applications")
-    @PreAuthorize("hasAuthority('JOB_SEEKER')")     //    @PreAuthorize("hasRole('JOB_SEEKER')")
+    @PreAuthorize("hasAuthority('JOB_SEEKER')")
     public ResponseEntity<List<ApplicationResponse>> getMyApplications(@AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(applicationService.getMyApplications(userDetails.getUsername()));
     }
 
     @GetMapping("/job/{jobId}")
-    @PreAuthorize("hasAuthority('EMPLOYER')")     //    @PreAuthorize("hasRole('EMPLOYER')")
+    @PreAuthorize("hasAuthority('EMPLOYER')")
     public ResponseEntity<List<ApplicationResponse>> getApplicationsForJob(@PathVariable Long jobId, @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(applicationService.getApplicationsForJob(jobId, userDetails.getUsername()));
+    }
+
+    @PutMapping("/{applicationId}/status")
+    @PreAuthorize("hasAuthority('EMPLOYER')")
+    public ResponseEntity<ApplicationResponse> updateApplicationStatus(
+            @PathVariable Long applicationId,
+            @RequestBody UpdateApplicationStatusRequest statusRequest,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(applicationService.updateApplicationStatus(applicationId, statusRequest.getStatus(), userDetails.getUsername()));
     }
 }
