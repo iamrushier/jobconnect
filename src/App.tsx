@@ -14,6 +14,10 @@ import EmployerJobsPage from "./pages/EmployerJobsPage";
 import CreateJobPage from "./pages/CreateJobPage";
 import EditJobPage from "./pages/EditJobPage";
 import JobApplicationsPage from "./pages/JobApplicationsPage";
+import AdminLoginPage from "./pages/AdminLoginPage";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
+import AdminUsersPage from "./pages/AdminUsersPage";
+import AdminJobsPage from "./pages/AdminJobsPage";
 
 function App() {
   return (
@@ -104,6 +108,33 @@ function App() {
                 element={
                   <ProtectedRoute role="EMPLOYER">
                     <JobApplicationsPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              {/* Admin routes */}
+              <Route path="/admin/login" element={<AdminLoginPage />} />
+              <Route
+                path="/admin/dashboard"
+                element={
+                  <ProtectedRoute role="ADMIN">
+                    <AdminDashboardPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/users"
+                element={
+                  <ProtectedRoute role="ADMIN">
+                    <AdminUsersPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/jobs"
+                element={
+                  <ProtectedRoute role="ADMIN">
+                    <AdminJobsPage />
                   </ProtectedRoute>
                 }
               />

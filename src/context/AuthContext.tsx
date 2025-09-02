@@ -1,13 +1,15 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from "react";
-import type { UserResponse } from "../types";
-import { fetchCurrentUser } from "../api/requests";
-import { getItem, removeItem } from "../utils/storage-helpers";
+import type { UserResponse, LoginRequest, AuthResponse } from "../types";
+import { fetchCurrentUser, login as apiLogin } from "../api/requests";
+import { getItem, removeItem, setItem } from "../utils/storage-helpers";
 
 interface AuthContextType {
   user: UserResponse | null;
   setUser: React.Dispatch<React.SetStateAction<UserResponse | null>>;
   loading: boolean;
+  login: (loginRequest: LoginRequest) => Promise<AuthResponse>;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -35,8 +37,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           removeItem("refreshToken");
           setUser(null);
         }
-      } else {
-        console.log("No token found");
       }
       setLoading(false);
     };
@@ -44,8 +44,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     initializeAuth();
   }, []);
 
+  const login = async (loginRequest: LoginRequest) => {
+    const response = await apiLogin(loginRequest);
+    setItem("token", response.data.token);
+    setItem("role", response.data.role);
+    if (response.data.refreshToken) {
+      setItem("refreshToken", response.data.refreshToken);
+    }
+    const userResponse = await fetchCurrentUser();
+    setUser(userResponse.data);
+    return response.data;
+  };
+
+  const logout = () => {
+    removeItem("token");
+    removeItem("role");
+    removeItem("refreshToken");
+    setUser(null);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, loading }}>
+    <AuthContext.Provider value={{ user, setUser, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

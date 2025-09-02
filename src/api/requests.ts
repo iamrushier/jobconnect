@@ -253,3 +253,23 @@ export const updateApplicationStatus = async (
     throw error;
   }
 };
+
+export const getAllUsers = async () => {
+  try {
+    const response = await httpClient.get<UserResponse[]>(API.ADMIN.USERS);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+};
+
+export const getAllJobs = async () => {
+  try {
+    const response = await httpClient.get<JobResponse[]>(API.ADMIN.JOBS);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    throw error;
+  }
+};

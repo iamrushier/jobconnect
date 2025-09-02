@@ -15,15 +15,16 @@ export const API = {
     BASE: "/api/v1/applications",
     MINE: "/api/v1/applications/my-applications",
     JOB: (jobId: number) => `/api/v1/applications/job/${jobId}`,
-    UPDATE_STATUS: (applicationId: number) => `/api/v1/applications/${applicationId}/status`,
+    UPDATE_STATUS: (applicationId: number) =>
+      `/api/v1/applications/${applicationId}/status`,
+  },
+  ADMIN: {
+    USERS: "/api/v1/admin/users",
+    JOBS: "/api/v1/admin/jobs",
   },
   RESUMES: {
     UPLOAD: "/api/v1/resumes/upload",
     DOWNLOAD: (filename: string) => `/api/v1/resumes/download/${filename}`,
     MINE: "/api/v1/resumes/mine",
   },
-  //   ADMIN: {
-  //     USERS: "/api/v1/admin/users",
-  //     JOBS: "/api/v1/admin/jobs",
-  //   },
 };
