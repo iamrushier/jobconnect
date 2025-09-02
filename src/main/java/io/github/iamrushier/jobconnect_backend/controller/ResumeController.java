@@ -67,6 +67,7 @@ public class ResumeController {
     public ResponseEntity<ResumeResponse> getMyResume(@AuthenticationPrincipal UserDetails userDetails) {
         Resume resume = resumeService.getResumeByUsername(userDetails.getUsername());
         ResumeResponse resumeResponse = new ResumeResponse(
+                resume.getId(),
                 resume.getFilename(),
                 resume.getOriginalFilename(),
                 resume.getContentType(),

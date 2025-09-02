@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResumeResponse {
+    private Long id;
     private String filename;
     private String originalFilename;
     private String contentType;
