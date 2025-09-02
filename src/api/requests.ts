@@ -2,6 +2,8 @@ import type { AxiosInstance } from "axios";
 import axios from "axios";
 import { getItem } from "../utils/storage-helpers";
 import type {
+  ApplicationRequest,
+  ApplicationResponse,
   AuthResponse,
   JobRequest,
   JobResponse,
@@ -194,6 +196,31 @@ export const downloadResume = async (filename: string) => {
     return response.data;
   } catch (error) {
     console.error("Error downloading resume:", error);
+    throw error;
+  }
+};
+
+export const applyForJob = async (applicationRequest: ApplicationRequest) => {
+  try {
+    const response = await httpClient.post<ApplicationResponse>(
+      API.APPLICATIONS.BASE,
+      applicationRequest
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error applying for job:", error);
+    throw error;
+  }
+};
+
+export const getMyApplications = async () => {
+  try {
+    const response = await httpClient.get<ApplicationResponse[]>(
+      API.APPLICATIONS.MINE
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching applications:", error);
     throw error;
   }
 };

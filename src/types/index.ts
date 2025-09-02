@@ -62,8 +62,25 @@ export interface JobSearchParams {
 }
 
 export interface ResumeResponse {
+  id: number;
   filename: string;
   originalFilename: string;
   contentType: string;
   size: number;
+}
+
+export type ApplicationStatus = "Pending" | "Approved" | "Rejected";
+
+export interface ApplicationRequest {
+  jobId: number;
+  resumeId: number;
+}
+
+export interface ApplicationResponse {
+  id: number;
+  jobId: number;
+  jobTitle: string;
+  userId: number;
+  status: ApplicationStatus;
+  createdAt: string;
 }
