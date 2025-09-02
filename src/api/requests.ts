@@ -103,9 +103,7 @@ export const createJob = async (jobRequest: JobRequest) => {
 
 export const getJobById = async (id: number) => {
   try {
-    const response = await httpClient.get<JobResponse>(
-      `${API.JOBS.BASE}/${id}`
-    );
+    const response = await httpClient.get<JobResponse>(`${API.JOBS.BASE}/${id}`);
     return response.data;
   } catch (error) {
     console.error(`Error fetching job with id ${id}:`, error);
@@ -181,6 +179,21 @@ export const deleteMyResume = async () => {
     await httpClient.delete(API.RESUMES.MINE);
   } catch (error) {
     console.error("Error deleting resume:", error);
+    throw error;
+  }
+};
+
+export const downloadResume = async (filename: string) => {
+  try {
+    const response = await httpClient.get(
+      API.RESUMES.DOWNLOAD(filename),
+      {
+        responseType: "blob",
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error downloading resume:", error);
     throw error;
   }
 };

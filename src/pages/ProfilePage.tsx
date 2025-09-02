@@ -1,6 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { updateUserName, uploadResume, getMyResume, deleteMyResume } from "../api/requests";
+import {
+  updateUserName,
+  uploadResume,
+  getMyResume,
+  deleteMyResume,
+  downloadResume,
+} from "../api/requests";
 import { useNavigate } from "react-router-dom";
 import { removeItem } from "../utils/storage-helpers";
 import type { ResumeResponse } from "../types";
@@ -18,7 +25,7 @@ const ProfilePage: React.FC = () => {
         try {
           const resumeData = await getMyResume();
           setResume(resumeData);
-        } catch (error) {
+        } catch (error: any) {
           // It's okay if the user doesn't have a resume yet
         }
       };
@@ -42,8 +49,8 @@ const ProfilePage: React.FC = () => {
         const resumeData = await getMyResume();
         setResume(resumeData);
         window.alert("Resume uploaded successfully.");
-      } catch (error) {
-        window.alert("Failed to upload resume.");
+      } catch (error: any) {
+        window.alert("Failed to upload resume. " + error?.message);
       }
     }
   };
@@ -54,15 +61,29 @@ const ProfilePage: React.FC = () => {
         await deleteMyResume();
         setResume(null);
         window.alert("Resume removed successfully.");
-      } catch (error) {
-        window.alert("Failed to remove resume.");
+      } catch (error: any) {
+        window.alert(
+          "Failed to remove resume. " + error?.response?.data?.message
+        );
+        console.log("Error details:", error);
       }
     }
   };
 
-  const handleDownloadResume = () => {
+  const handleDownloadResume = async () => {
     if (resume) {
-      window.open(`http://localhost:8080/api/v1/resumes/download/${resume.filename}`);
+      try {
+        const blob = await downloadResume(resume.filename);
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = resume.originalFilename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } catch (error: any) {
+        window.alert("Failed to download resume. " + error?.message);
+      }
     }
   };
 

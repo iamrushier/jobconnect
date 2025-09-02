@@ -21,10 +21,6 @@ export const API = {
     DOWNLOAD: (filename: string) => `/api/v1/resumes/download/${filename}`,
     MINE: "/api/v1/resumes/mine",
   },
-  //   RESUMES: {
-  //     UPLOAD: "/api/v1/resumes/upload",
-  //     DOWNLOAD: (filename: string) => `/api/v1/resumes/download/${filename}`,
-  //   },
   //   ADMIN: {
   //     USERS: "/api/v1/admin/users",
   //     JOBS: "/api/v1/admin/jobs",
