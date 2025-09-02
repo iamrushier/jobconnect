@@ -60,3 +60,10 @@ export interface JobSearchParams {
   page?: number;
   size?: number;
 }
+
+export interface ResumeResponse {
+  filename: string;
+  originalFilename: string;
+  contentType: string;
+  size: number;
+}

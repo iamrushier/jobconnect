@@ -9,6 +9,7 @@ import type {
   LoginRequest,
   PagedResponse,
   RegisterRequest,
+  ResumeResponse,
   UserResponse,
 } from "../types";
 import { API } from "./endpoints";
@@ -102,7 +103,9 @@ export const createJob = async (jobRequest: JobRequest) => {
 
 export const getJobById = async (id: number) => {
   try {
-    const response = await httpClient.get<JobResponse>(`${API.JOBS.BASE}/${id}`);
+    const response = await httpClient.get<JobResponse>(
+      `${API.JOBS.BASE}/${id}`
+    );
     return response.data;
   } catch (error) {
     console.error(`Error fetching job with id ${id}:`, error);
@@ -138,6 +141,46 @@ export const deleteJob = async (id: number) => {
     await httpClient.delete(`${API.JOBS.BASE}/${id}`);
   } catch (error) {
     console.error(`Error deleting job with id ${id}:`, error);
+    throw error;
+  }
+};
+
+export const uploadResume = async (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const response = await httpClient.post<string>(
+      API.RESUMES.UPLOAD,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error uploading resume:", error);
+    throw error;
+  }
+};
+
+export const getMyResume = async () => {
+  try {
+    const response = await httpClient.get<ResumeResponse>(API.RESUMES.MINE);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching resume:", error);
+    throw error;
+  }
+};
+
+export const deleteMyResume = async () => {
+  try {
+    await httpClient.delete(API.RESUMES.MINE);
+  } catch (error) {
+    console.error("Error deleting resume:", error);
     throw error;
   }
 };

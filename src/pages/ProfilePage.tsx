@@ -1,14 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { updateUserName } from "../api/requests";
+import { updateUserName, uploadResume, getMyResume, deleteMyResume } from "../api/requests";
 import { useNavigate } from "react-router-dom";
 import { removeItem } from "../utils/storage-helpers";
+import type { ResumeResponse } from "../types";
 
 const ProfilePage: React.FC = () => {
   const { user, loading, setUser } = useAuth();
-  const [editMode, setEditMode] = React.useState(false);
-  const [newUsername, setNewUsername] = React.useState(user!.username);
+  const [editMode, setEditMode] = useState(false);
+  const [newUsername, setNewUsername] = useState(user!.username);
+  const [resume, setResume] = useState<ResumeResponse | null>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user?.role === "JOB_SEEKER") {
+      const fetchResume = async () => {
+        try {
+          const resumeData = await getMyResume();
+          setResume(resumeData);
+        } catch (error) {
+          // It's okay if the user doesn't have a resume yet
+        }
+      };
+      fetchResume();
+    }
+  }, [user]);
 
   const handleEditUsername = async (newUsername: string) => {
     const updatedUser = await updateUserName(newUsername);
@@ -17,6 +33,37 @@ const ProfilePage: React.FC = () => {
     setUser(null);
     removeItem("token");
     navigate("/login");
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      try {
+        await uploadResume(e.target.files[0]);
+        const resumeData = await getMyResume();
+        setResume(resumeData);
+        window.alert("Resume uploaded successfully.");
+      } catch (error) {
+        window.alert("Failed to upload resume.");
+      }
+    }
+  };
+
+  const handleRemoveResume = async () => {
+    if (window.confirm("Are you sure you want to remove your resume?")) {
+      try {
+        await deleteMyResume();
+        setResume(null);
+        window.alert("Resume removed successfully.");
+      } catch (error) {
+        window.alert("Failed to remove resume.");
+      }
+    }
+  };
+
+  const handleDownloadResume = () => {
+    if (resume) {
+      window.open(`http://localhost:8080/api/v1/resumes/download/${resume.filename}`);
+    }
   };
 
   if (loading) {
@@ -188,17 +235,61 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Debug Information (can be removed in production) */}
-        <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
-          <details className="cursor-pointer">
-            <summary className="text-sm font-medium text-gray-700">
-              Debug Information (Development Only)
-            </summary>
-            <pre className="mt-2 text-xs text-gray-600 bg-white p-3 rounded border overflow-auto">
-              {JSON.stringify(user, null, 2)}
-            </pre>
-          </details>
-        </div>
+        {user.role === "JOB_SEEKER" && (
+          <div className="px-6 py-6 border-t border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">
+              My Resume
+            </h2>
+            <div className="p-4 bg-gray-50 border rounded-md">
+              {resume ? (
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-semibold">{resume.originalFilename}</p>
+                    <p className="text-sm text-gray-500">
+                      {(resume.size / 1024).toFixed(2)} KB
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <button
+                      onClick={handleDownloadResume}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                    >
+                      Download
+                    </button>
+                    <label className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors cursor-pointer">
+                      Replace
+                      <input
+                        type="file"
+                        className="hidden"
+                        onChange={handleFileChange}
+                      />
+                    </label>
+                    <button
+                      onClick={handleRemoveResume}
+                      className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <p className="text-gray-900 mb-4">
+                    Upload your resume to easily apply for jobs.
+                  </p>
+                  <label className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors cursor-pointer">
+                    Upload Resume
+                    <input
+                      type="file"
+                      className="hidden"
+                      onChange={handleFileChange}
+                    />
+                  </label>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

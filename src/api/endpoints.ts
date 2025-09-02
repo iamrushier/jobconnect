@@ -16,6 +16,11 @@ export const API = {
     MINE: "/api/v1/applications/my-applications",
     JOB: (jobId: number) => `/api/v1/applications/job/${jobId}`,
   },
+  RESUMES: {
+    UPLOAD: "/api/v1/resumes/upload",
+    DOWNLOAD: (filename: string) => `/api/v1/resumes/download/${filename}`,
+    MINE: "/api/v1/resumes/mine",
+  },
   //   RESUMES: {
   //     UPLOAD: "/api/v1/resumes/upload",
   //     DOWNLOAD: (filename: string) => `/api/v1/resumes/download/${filename}`,
