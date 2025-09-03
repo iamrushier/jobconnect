@@ -1,0 +1,5 @@
+Attaching to jobconnect-backend, jobconnect-frontend, jobconnect-mysql
+jobconnect-frontend  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+jobconnect-frontend  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+jobconnect-frontend  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+jobconnect-frontend  | 10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf

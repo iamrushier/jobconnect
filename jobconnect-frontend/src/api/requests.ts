@@ -16,9 +16,9 @@ import type {
   UserResponse,
 } from "../types";
 import { API } from "./endpoints";
-
+// import.meta.env.VITE_API_BASE_URL ||
 const httpClient: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: "http://localhost:8080",
   headers: {
     "Content-Type": "application/json",
   },
@@ -41,10 +41,12 @@ httpClient.interceptors.request.use(
 );
 
 export const login = (data: LoginRequest) => {
+  console.log("Try Login", data);
   return httpClient.post<AuthResponse>(API.AUTH.LOGIN, data);
 };
 
 export const register = (data: RegisterRequest) => {
+  console.log("Try Register", data);
   return httpClient.post<AuthResponse>(API.AUTH.REGISTER, data);
 };
 
@@ -106,7 +108,9 @@ export const createJob = async (jobRequest: JobRequest) => {
 
 export const getJobById = async (id: number) => {
   try {
-    const response = await httpClient.get<JobResponse>(`${API.JOBS.BASE}/${id}`);
+    const response = await httpClient.get<JobResponse>(
+      `${API.JOBS.BASE}/${id}`
+    );
     return response.data;
   } catch (error) {
     console.error(`Error fetching job with id ${id}:`, error);
@@ -188,12 +192,9 @@ export const deleteMyResume = async () => {
 
 export const downloadResume = async (filename: string) => {
   try {
-    const response = await httpClient.get(
-      API.RESUMES.DOWNLOAD(filename),
-      {
-        responseType: "blob",
-      }
-    );
+    const response = await httpClient.get(API.RESUMES.DOWNLOAD(filename), {
+      responseType: "blob",
+    });
     return response.data;
   } catch (error) {
     console.error("Error downloading resume:", error);
