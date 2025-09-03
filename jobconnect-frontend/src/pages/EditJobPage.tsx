@@ -67,7 +67,9 @@ const EditJobPage = () => {
       {error && <div className="text-red-500 mb-4">{error}</div>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="title" className="block font-semibold">Title</label>
+          <label htmlFor="title" className="block font-semibold">
+            Title
+          </label>
           <input
             type="text"
             id="title"
@@ -79,7 +81,9 @@ const EditJobPage = () => {
           />
         </div>
         <div>
-          <label htmlFor="description" className="block font-semibold">Description</label>
+          <label htmlFor="description" className="block font-semibold">
+            Description
+          </label>
           <textarea
             id="description"
             name="description"
@@ -90,7 +94,9 @@ const EditJobPage = () => {
           />
         </div>
         <div>
-          <label htmlFor="location" className="block font-semibold">Location</label>
+          <label htmlFor="location" className="block font-semibold">
+            Location
+          </label>
           <input
             type="text"
             id="location"
@@ -102,7 +108,9 @@ const EditJobPage = () => {
           />
         </div>
         <div>
-          <label htmlFor="minSalary" className="block font-semibold">Minimum Salary</label>
+          <label htmlFor="minSalary" className="block font-semibold">
+            Minimum Salary
+          </label>
           <input
             type="number"
             id="minSalary"
@@ -113,7 +121,9 @@ const EditJobPage = () => {
           />
         </div>
         <div>
-          <label htmlFor="maxSalary" className="block font-semibold">Maximum Salary</label>
+          <label htmlFor="maxSalary" className="block font-semibold">
+            Maximum Salary
+          </label>
           <input
             type="number"
             id="maxSalary"
@@ -123,7 +133,10 @@ const EditJobPage = () => {
             className="w-full p-2 border rounded-md"
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
           Update
         </button>
       </form>

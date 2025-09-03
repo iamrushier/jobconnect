@@ -68,10 +68,14 @@ const JobDetailsModal = ({ jobId, onClose }: JobDetailsModalProps) => {
         <p className="text-gray-600 mb-4">{job.location}</p>
         <p className="mb-4">{job.description}</p>
         <div className="mb-4">
-          <span className="font-semibold">Salary:</span> ${job.minSalary} - ${job.maxSalary}
+          <span className="font-semibold">Salary:</span> ${job.minSalary} - $
+          {job.maxSalary}
         </div>
         <div className="flex justify-end space-x-4">
-          <button onClick={onClose} className="bg-gray-300 px-4 py-2 rounded-md">
+          <button
+            onClick={onClose}
+            className="bg-gray-300 px-4 py-2 rounded-md"
+          >
             Close
           </button>
           <button

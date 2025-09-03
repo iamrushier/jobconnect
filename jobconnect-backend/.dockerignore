@@ -1,0 +1,10 @@
+.git
+.gitignore
+.github
+*.md
+.gradle
+build
+src
+!build/libs/*.jar
+Dockerfile
+.dockerignore

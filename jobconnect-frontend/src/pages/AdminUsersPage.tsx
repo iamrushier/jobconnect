@@ -36,11 +36,16 @@ const AdminUsersPage = () => {
       <h1 className="text-3xl font-bold mb-8">Admin Users</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {users.map((user) => (
-          <div key={user.id} className="bg-blue-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+          <div
+            key={user.id}
+            className="bg-blue-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          >
             <p className="text-xl font-semibold mb-2">{user.username}</p>
             <p className="text-blue-200 mb-1">{user.email}</p>
             <p className="text-sm text-blue-300">Role: {user.role}</p>
-            <p className="text-xs text-blue-400 mt-2">Joined: {new Date(user.createdAt).toLocaleDateString()}</p>
+            <p className="text-xs text-blue-400 mt-2">
+              Joined: {new Date(user.createdAt).toLocaleDateString()}
+            </p>
           </div>
         ))}
       </div>

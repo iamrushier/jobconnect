@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import type { JobResponse, JobSearchParams, PagedResponse } from "../types";
 import { searchJobs } from "../api/requests";
@@ -42,6 +41,7 @@ const JobsPage = () => {
         currentPage: data.page,
         isLast: data.last,
       });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error("Error fetching jobs:", err);
       setError(

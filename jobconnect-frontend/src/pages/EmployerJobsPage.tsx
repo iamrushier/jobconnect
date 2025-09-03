@@ -14,7 +14,7 @@ const EmployerJobsPage = () => {
       try {
         const data = await getAllJobsByEmployer();
         setJobs(data);
-      } catch (err) { 
+      } catch (err) {
         setError("Failed to fetch jobs.");
       } finally {
         setIsLoading(false);
@@ -46,7 +46,10 @@ const EmployerJobsPage = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">My Jobs</h1>
-      <Link to="/employer/jobs/create" className="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block">
+      <Link
+        to="/employer/jobs/create"
+        className="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block"
+      >
         Create Job
       </Link>
       {jobs.length === 0 ? (
@@ -58,13 +61,22 @@ const EmployerJobsPage = () => {
               <h2 className="text-xl font-semibold">{job.title}</h2>
               <p className="text-gray-600">{job.location}</p>
               <div className="mt-4 space-x-2">
-                <Link to={`/employer/jobs/${job.id}/applications`} className="bg-green-500 text-white px-4 py-2 rounded">
+                <Link
+                  to={`/employer/jobs/${job.id}/applications`}
+                  className="bg-green-500 text-white px-4 py-2 rounded"
+                >
                   View Applications
                 </Link>
-                <Link to={`/employer/jobs/edit/${job.id}`} className="bg-yellow-500 text-white px-4 py-2 rounded">
+                <Link
+                  to={`/employer/jobs/edit/${job.id}`}
+                  className="bg-yellow-500 text-white px-4 py-2 rounded"
+                >
                   Edit
                 </Link>
-                <button onClick={() => handleDelete(job.id)} className="bg-red-500 text-white px-4 py-2 rounded">
+                <button
+                  onClick={() => handleDelete(job.id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded"
+                >
                   Delete
                 </button>
               </div>

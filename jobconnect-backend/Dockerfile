@@ -1,5 +1,5 @@
 # Use Java 17 runtime
-FROM eclipse-temurin:17
+FROM eclipse-temurin:17-jre-alpine
 
 # Metadata (optional)
 LABEL maintainer="iamrushier.github.io"
