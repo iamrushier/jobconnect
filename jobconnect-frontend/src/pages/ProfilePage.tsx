@@ -65,7 +65,6 @@ const ProfilePage: React.FC = () => {
         window.alert(
           "Failed to remove resume. " + error?.response?.data?.message
         );
-        console.log("Error details:", error);
       }
     }
   };

@@ -24,7 +24,6 @@ const LoginPage: React.FC = () => {
     try {
       // Step 1: Login and get token
       const { data } = await login({ username, password });
-      console.log("Login response:", data);
 
       // Step 2: Store tokens immediately
       setItem("token", data.token);
@@ -39,7 +38,6 @@ const LoginPage: React.FC = () => {
       // Step 4: Fetch user data
       try {
         const userResponse = await fetchCurrentUser();
-        console.log("User response:", userResponse.data);
         setUser(userResponse.data);
 
         setMessage("Login successful! Redirecting...");
@@ -47,7 +45,6 @@ const LoginPage: React.FC = () => {
           navigate("/");
         }, 1000);
       } catch (userError) {
-        console.error("Failed to fetch user data:", userError);
         // Even if user fetch fails, we can still redirect since login was successful
         setMessage("Login successful! Redirecting...");
         setTimeout(() => {
@@ -55,7 +52,6 @@ const LoginPage: React.FC = () => {
         }, 1000);
       }
     } catch (error: any) {
-      console.error("Login error:", error);
       setError(
         error?.response?.data?.message ||
           "Login failed. Please check your credentials."

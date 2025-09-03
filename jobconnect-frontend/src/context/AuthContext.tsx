@@ -25,12 +25,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       const token = getItem("token");
       if (token) {
         try {
-          console.log("Token found, fetching user data...");
           const userResponse = await fetchCurrentUser();
-          console.log("User data fetched successfully:", userResponse.data);
           setUser(userResponse.data);
         } catch (error) {
-          console.error("Failed to fetch user:", error);
           // Clear invalid token
           removeItem("token");
           removeItem("role");

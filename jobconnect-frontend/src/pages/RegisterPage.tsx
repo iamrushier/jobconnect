@@ -23,14 +23,12 @@ const RegisterPage: React.FC = () => {
     setError(null);
 
     try {
-      const response = await register({ username, password, email, role });
-      console.log("Registration response:", response.data);
+      await register({ username, password, email, role });
 
       setMessage("Registration successful! Redirecting to login...");
       // Navigate to login page after successful registration
       setTimeout(() => navigate("/login"), 1500);
     } catch (error: any) {
-      console.error("Registration failed:", error);
       setError(
         error?.response?.data?.message ||
           "Registration failed. Please try again."
