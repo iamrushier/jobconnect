@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { register } from "../api/requests";
+import { register } from "../../api/requests";
 import { useNavigate } from "react-router-dom";
-import type { Role } from "../types";
-import AuthLayout from "../layout/AuthLayout";
+import type { Role } from "../../types";
+import AuthLayout from "../../layout/AuthLayout";
 
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = useState("");

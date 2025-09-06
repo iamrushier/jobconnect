@@ -1,5 +1,5 @@
-import LoadingSpinner from "../components/LoadingSpinner";
-import { useAuth } from "../context/AuthContext";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { useAuth } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 
 const HomePage = () => {

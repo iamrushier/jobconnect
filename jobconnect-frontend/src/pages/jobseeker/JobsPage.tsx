@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import type { JobResponse, JobSearchParams, PagedResponse } from "../types";
-import { searchJobs } from "../api/requests";
-import LoadingSpinner from "../components/LoadingSpinner";
+import type { JobResponse, JobSearchParams, PagedResponse } from "../../types";
+import { searchJobs } from "../../api/requests";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
-import JobDetailsModal from "../components/JobDetailsModal";
+import JobDetailsModal from "../../components/JobDetailsModal";
 
 const JobsPage = () => {
   const [jobs, setJobs] = useState<JobResponse[]>([]);
@@ -55,7 +55,7 @@ const JobsPage = () => {
   // Initial load
   useEffect(() => {
     fetchJobs(searchParams);
-  }, []);
+  }, [searchParams]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

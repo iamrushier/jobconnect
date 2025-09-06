@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAllJobsByEmployer, deleteJob } from "../api/requests";
-import type { JobResponse } from "../types";
-import LoadingSpinner from "../components/LoadingSpinner";
+import { getAllJobsByEmployer, deleteJob } from "../../api/requests";
+import type { JobResponse } from "../../types";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const EmployerJobsPage = () => {
   const [jobs, setJobs] = useState<JobResponse[]>([]);

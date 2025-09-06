@@ -1,39 +1,69 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { createJob } from "../api/requests";
-import type { JobRequest } from "../types";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getJobById, updateJob } from "../../api/requests";
+import type { JobRequest } from "../../types";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
-const CreateJobPage = () => {
+const EditJobPage = () => {
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [job, setJob] = useState<JobRequest>({
-    title: "",
-    description: "",
-    location: "",
-    minSalary: undefined,
-    maxSalary: undefined,
-  });
+  const [job, setJob] = useState<JobRequest | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchJob = async () => {
+      try {
+        if (id) {
+          const data = await getJobById(parseInt(id, 10));
+          setJob(data);
+        }
+      } catch (err) {
+        setError("Failed to fetch job.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchJob();
+  }, [id]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setJob({ ...job, [name]: value });
+    if (job) {
+      setJob({ ...job, [name]: value });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await createJob(job);
-      navigate("/employer/jobs");
-    } catch (err) {
-      setError("Failed to create job.");
+    if (job && id) {
+      try {
+        await updateJob(parseInt(id, 10), job);
+        navigate("/employer/jobs");
+      } catch (err) {
+        setError("Failed to update job.");
+      }
     }
   };
 
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!job) {
+    return <div>Job not found.</div>;
+  }
+
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Create Job</h1>
+      <h1 className="text-2xl font-bold mb-4">Edit Job</h1>
       {error && <div className="text-red-500 mb-4">{error}</div>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -107,11 +137,11 @@ const CreateJobPage = () => {
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 rounded"
         >
-          Create
+          Update
         </button>
       </form>
     </div>
   );
 };
 
-export default CreateJobPage;
+export default EditJobPage;

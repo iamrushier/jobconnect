@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import {
   updateUserName,
   uploadResume,
   getMyResume,
   deleteMyResume,
   downloadResume,
-} from "../api/requests";
+} from "../../api/requests";
 import { Link, useNavigate } from "react-router-dom";
-import { removeItem } from "../utils/storage-helpers";
-import type { ResumeResponse } from "../types";
+import { removeItem } from "../../utils/storage-helpers";
+import type { ResumeResponse } from "../../types";
 
 const ProfilePage: React.FC = () => {
   const { user, loading, setUser } = useAuth();

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getAllUsers } from "../api/requests";
-import type { UserResponse } from "../types";
-import LoadingSpinner from "../components/LoadingSpinner";
+import { getAllUsers } from "../../api/requests";
+import type { UserResponse } from "../../types";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const AdminUsersPage = () => {
   const [users, setUsers] = useState<UserResponse[]>([]);

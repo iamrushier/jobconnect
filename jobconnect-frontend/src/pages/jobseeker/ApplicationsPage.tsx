@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getMyApplications } from "../api/requests";
-import type { ApplicationResponse } from "../types";
-import LoadingSpinner from "../components/LoadingSpinner";
+import { getMyApplications } from "../../api/requests";
+import type { ApplicationResponse } from "../../types";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const ApplicationsPage = () => {
   const [applications, setApplications] = useState<ApplicationResponse[]>([]);

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { fetchCurrentUser, login } from "../api/requests";
-import { setItem } from "../utils/storage-helpers";
+import { fetchCurrentUser, login } from "../../api/requests";
+import { setItem } from "../../utils/storage-helpers";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import AuthLayout from "../layout/AuthLayout";
+import { useAuth } from "../../context/AuthContext";
+import AuthLayout from "../../layout/AuthLayout";
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

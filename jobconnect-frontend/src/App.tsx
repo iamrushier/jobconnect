@@ -1,23 +1,23 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import ProfilePage from "./pages/ProfilePage";
+import HomePage from "./pages/common/HomePage";
+import LoginPage from "./pages/common/LoginPage";
+import RegisterPage from "./pages/common/RegisterPage";
+import ProfilePage from "./pages/common/ProfilePage";
 import Header from "./components/Header";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import NotFoundPage from "./components/NotFoundPage";
 import Footer from "./components/Footer";
-import JobsPage from "./pages/JobsPage";
-import ApplicationsPage from "./pages/ApplicationsPage";
-import EmployerJobsPage from "./pages/EmployerJobsPage";
-import CreateJobPage from "./pages/CreateJobPage";
-import EditJobPage from "./pages/EditJobPage";
-import JobApplicationsPage from "./pages/JobApplicationsPage";
-import AdminLoginPage from "./pages/AdminLoginPage";
-import AdminDashboardPage from "./pages/AdminDashboardPage";
-import AdminUsersPage from "./pages/AdminUsersPage";
-import AdminJobsPage from "./pages/AdminJobsPage";
+import JobsPage from "./pages/jobseeker/JobsPage";
+import ApplicationsPage from "./pages/jobseeker/ApplicationsPage";
+import EmployerJobsPage from "./pages/employer/EmployerJobsPage";
+import CreateJobPage from "./pages/employer/CreateJobPage";
+import EditJobPage from "./pages/employer/EditJobPage";
+import JobApplicationsPage from "./pages/employer/JobApplicationsPage";
+import AdminLoginPage from "./pages/admin/AdminLoginPage";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
+import AdminUsersPage from "./pages/admin/AdminUsersPage";
+import AdminJobsPage from "./pages/admin/AdminJobsPage";
 
 function App() {
   return (

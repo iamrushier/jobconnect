@@ -4,13 +4,13 @@ import {
   getApplicationsForJob,
   updateApplicationStatus,
   downloadResume,
-} from "../api/requests";
+} from "../../api/requests";
 import type {
   ApplicationResponse,
   UpdateApplicationStatusRequest,
-} from "../types";
-import { ApplicationStatus } from "../types";
-import LoadingSpinner from "../components/LoadingSpinner";
+} from "../../types";
+import { ApplicationStatus } from "../../types";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const JobApplicationsPage = () => {
   const { jobId } = useParams<{ jobId: string }>();

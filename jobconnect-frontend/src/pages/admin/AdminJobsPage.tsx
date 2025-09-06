@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getAllJobs } from "../api/requests";
-import type { JobResponse } from "../types";
-import LoadingSpinner from "../components/LoadingSpinner";
+import { getAllJobs } from "../../api/requests";
+import type { JobResponse } from "../../types";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const AdminJobsPage = () => {
   const [jobs, setJobs] = useState<JobResponse[]>([]);
