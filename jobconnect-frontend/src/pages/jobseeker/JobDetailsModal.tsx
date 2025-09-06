@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getJobById, applyForJob, getMyResume } from "../api/requests";
-import type { JobResponse, ResumeResponse } from "../types";
-import LoadingSpinner from "./LoadingSpinner";
+import { getJobById, applyForJob, getMyResume } from "../../api/requests";
+import type { JobResponse, ResumeResponse } from "../../types";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 interface JobDetailsModalProps {
   jobId: number;

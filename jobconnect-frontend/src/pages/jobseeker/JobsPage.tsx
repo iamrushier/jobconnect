@@ -3,7 +3,7 @@ import type { JobResponse, JobSearchParams, PagedResponse } from "../../types";
 import { searchJobs } from "../../api/requests";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
-import JobDetailsModal from "../../components/JobDetailsModal";
+import JobDetailsModal from "./JobDetailsModal";
 
 const JobsPage = () => {
   const [jobs, setJobs] = useState<JobResponse[]>([]);
