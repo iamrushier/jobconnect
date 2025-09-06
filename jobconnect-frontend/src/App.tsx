@@ -23,10 +23,10 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <div className="min-h-screen bg-gray-50">
+        <div className="flex flex-col min-h-screen bg-gray-50">
           <Header />
 
-          <main className="container mx-auto px-4 py-6">
+          <main className="container flex-grow px-4 py-6 mx-auto">
             <Routes>
               {/* Public routes */}
               <Route path="/" element={<HomePage />} />
