@@ -12,9 +12,7 @@ services:
       - mysql_data:/var/lib/mysql
 
   backend:
-    build:
-      context: ./jobconnect-backend
-      dockerfile: Dockerfile
+    image: imrushier/jobconnect-backend:1.0.0
     container_name: jobconnect-backend
     depends_on:
       - mysql
@@ -24,9 +22,7 @@ services:
       - ./jobconnect-backend/.env
 
   frontend:
-    build:
-      context: ./jobconnect-frontend
-      dockerfile: Dockerfile
+    image: imrushier/jobconnect-frontend:1.0.0
     container_name: jobconnect-frontend
     depends_on:
       - backend
